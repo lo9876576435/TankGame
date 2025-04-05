@@ -31,7 +31,7 @@ bool Particle::update(float deltaTime) {
     return lifetime > 0;
 }
 
-// vụ nổ chính - chatgpt
+// vụ nổ chính
 Explosion::Explosion(float x, float y, float maxRadius) 
     : position{x, y}, radius(5.0f), maxRadius(maxRadius), growing(true), speed(1.5f) {
     std::random_device rd;

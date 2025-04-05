@@ -199,7 +199,7 @@ void Tank::update(const Terrain& terrain) {
     angle = std::atan2(rightHeight - leftHeight, width) * 180 / PI;
     if (isAiming) calculateTrajectory(terrain);
 }
-
+// công thức đường dự đoán
 void Tank::calculateTrajectory(const Terrain& terrain) {
     float actualAngle = facingRight ? firingAngle : 180.0f - firingAngle;
     actualAngle -= angle;
@@ -246,14 +246,14 @@ void Tank::startAiming(int mouseX, int mouseY) {
 void Tank::updateAiming(int mouseX, int mouseY) {
     if (!isAiming) return;
     float dx = position.x - mouseX;
-    float dy = -(position.y - mouseY);
+    float dy = -(position.y - mouseY); // kéo ngược so với hướng 
     if (facingRight) firingAngle = std::atan2(dy, dx) * 180 / PI;
     else firingAngle = std::atan2(dy, -dx) * 180 / PI;
     firingAngle = std::max(0.0f, std::min(90.0f, firingAngle));
     float distance = std::sqrt(dx * dx + dy * dy);
     power = 20 * std::min(100.0f, std::max(10.0f, distance / 5.0f));
 }
-
+// coe chế đạn - khai hoả
 Projectile Tank::fire() {
     Projectile projectile;
     if (isAiming) {
@@ -280,7 +280,7 @@ Projectile Tank::fire() {
     }
     return projectile;
 }
-
+// Cơ chế di 
 void Tank::move(int direction, const Terrain& terrain) {
     if (stamina <= 0) return; 
     position.x += direction * 4;
@@ -327,7 +327,7 @@ Game::Game()
 Game::~Game() {
     cleanup();
 }
-
+// khởi động game
 bool Game::initialize() {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     TTF_Init();
@@ -357,7 +357,7 @@ bool Game::initialize() {
     SDL_FreeSurface(backgroundSurface);
     return true;
 }
-
+// khởi động trận đấu
 void Game::initializeGame() {
     terrain = std::make_unique<Terrain>(renderer, SCREEN_WIDTH);
     wind = std::make_unique<Wind>();
@@ -386,7 +386,7 @@ void Game::run() {
         const int FPS = 60;
         const int frameDelay = 1000 / FPS;
         Uint32 frameTime = SDL_GetTicks() - currentTime;
-        if (frameDelay > frameTime) SDL_Delay(frameDelay - frameTime);
+        if (frameDelay > frameTime) SDL_Delay(frameDelay - frameTime);    // giữ fps 60 - 1s vẽ 60 
     }
 }
 
